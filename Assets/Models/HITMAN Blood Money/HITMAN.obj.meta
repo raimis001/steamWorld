@@ -1,0 +1,113 @@
+fileFormatVersion: 2
+guid: 6878ef0e1131d4a419b120b577d254ec
+timeCreated: 1452604007
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: DrawCall_0024
+    100002: DrawCall_0026
+    100004: DrawCall_0027
+    100006: DrawCall_0028
+    100008: DrawCall_0038
+    100010: DrawCall_0039
+    100012: DrawCall_0041
+    100014: //RootNode
+    100016: Plane01
+    400000: DrawCall_0024
+    400002: DrawCall_0026
+    400004: DrawCall_0027
+    400006: DrawCall_0028
+    400008: DrawCall_0038
+    400010: DrawCall_0039
+    400012: DrawCall_0041
+    400014: //RootNode
+    400016: Plane01
+    2300000: DrawCall_0024
+    2300002: DrawCall_0026
+    2300004: DrawCall_0027
+    2300006: DrawCall_0028
+    2300008: DrawCall_0038
+    2300010: DrawCall_0039
+    2300012: DrawCall_0041
+    2300014: Plane01
+    3300000: DrawCall_0024
+    3300002: DrawCall_0026
+    3300004: DrawCall_0027
+    3300006: DrawCall_0028
+    3300008: DrawCall_0038
+    3300010: DrawCall_0039
+    3300012: DrawCall_0041
+    3300014: Plane01
+    4300000: DrawCall_0024
+    4300002: DrawCall_0026
+    4300004: DrawCall_0027
+    4300006: DrawCall_0028
+    4300008: DrawCall_0038
+    4300010: DrawCall_0039
+    4300012: DrawCall_0041
+    4300014: Plane01
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

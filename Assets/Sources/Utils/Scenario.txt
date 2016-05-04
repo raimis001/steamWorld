@@ -1,0 +1,35 @@
+﻿Intro
+	kāpēc mēs te esam, un kā atnācām
+
+Izdzīvošanas parametri
+	Dzīvība
+	Nogurums
+	Komforts (auksts, silts, telpa)
+	Ūdens
+	Barība
+
+Sākums
+	pamostamies no rīta
+		temperatūra normāla, naktī ir vēsāks
+		bīstamos dzīvniekus nelikt tuvumā spavnošanās punktam
+		dienas cikls - 10min
+	apkārt 
+		mežs, kura ciršanai nepieciešams cirvis
+		akmeņi, nepieciešams cirtnis
+	var atrast (jābūt pietiekami, lai izdzīvotu 3 dienas)
+		zāles kušķus, kurus novācot, var iegūt dažādus resursus
+			- kokus
+			- akmeņus
+			- dažādas sēklas
+		krūmus no kuriem var iegūt ogas, kuras var ēst
+		sēnes var ēst neapstrādātas
+	jābūt avotam, kas dod ūdeni, var uzkrāt 3 ūdens, 2x dienā papildinās
+	apkārt staigājošu tītarus, kas dod olas var ēst neapstrādātas, nogalināt nevar
+	savācot kokus un akmeņus var uzbūvēt primitīvu darba galdu tajā var izgatavot 
+		primitīvu āmuru, kas atļauj būvēt
+			parastu ugunskuru, tajā var pagatavot
+				sēnes ceptas
+				olas ceptas
+				gaļu ceptu
+			patvēruma nojumi
+			

@@ -1,0 +1,95 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 01.01.2001 01:01:01
+
+newmtl Material__312
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 3.9780 3.9780 3.9780
+	Ke 0.0000 0.0000 0.0000
+	map_Ka e3942bf1.jpg
+	map_Kd e3942bf1.jpg
+	map_Ks be982399.jpg
+	map_Ke Map__82_Mask.tga
+	map_bump -bm 0.3700 Map__79_Normal Bump.tga
+
+newmtl Material__311
+	Ns 11.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 1.9800 1.9800 1.9800
+	Ke 0.0000 0.0000 0.0000
+	map_Ka 5727386a.jpg
+	map_Kd 5727386a.jpg
+	map_Ks 5360975b.jpg
+	map_Ke Map__74_Mask.tga
+	map_bump -bm 0.4400 Map__71_Normal Bump.tga
+
+newmtl Material__3115
+	Ns 74.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka 5727386a.jpg
+	map_Kd 5727386a.jpg
+	map_Ke Map__74_Mask.tga
+
+newmtl Material__312t
+	Ns 58.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 8.9910 8.9910 8.9910
+	Ke 0.0000 0.0000 0.0000
+	map_Ka e3942bf1.jpg
+	map_Kd e3942bf1.jpg
+	map_Ks be982399.jpg
+	map_Ke Map__82_Mask.tga
+	map_bump -bm 0.3000 Map__79_Normal Bump.tga
+
+newmtl Material__313
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 1.4040 1.4040 1.4040
+	Ke 0.0000 0.0000 0.0000
+	map_Ka 9c251e3e.jpg
+	map_Kd 9c251e3e.jpg
+	map_Ks ac426d8d.jpg
+	map_Ke Map__88_Mask.tga
+	map_bump -bm 0.3000 Map__85_Normal Bump.tga
+
+newmtl wire_143224087
+	Ns 32
+	d 1
+	Tr 0
+	Tf 1 1 1
+	illum 2
+	Ka 0.5608 0.8784 0.3412
+	Kd 0.5608 0.8784 0.3412
+	Ks 0.3500 0.3500 0.3500
