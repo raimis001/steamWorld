@@ -1,29 +1,44 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Assertions;
+using UnityEngine.AI;
 
 public class AIStateMachine : MonoBehaviour
 {
-    public Agent curAgent;
+    public Agent agentConfig;
     private IState curState;
-    private UnityEngine.AI.NavMeshAgent agent;
+    private NavMeshAgent agent;
     private StateMessager messager;
+
+    private GameObject followTarget;
     private Vector3 agentHomeBase;
     private float workingRadius;
 
-    void Start()
+    void Awake()
     {
-        agent = GetComponentInChildren<UnityEngine.AI.NavMeshAgent>();
+        // Get agent instance
+        agent = GetComponentInChildren<NavMeshAgent>();
         Assert.IsNotNull(agent, "No NavMeshAgent found in GameObject: " + name);
+
+        // Init agents base working parameters
         agentHomeBase = transform.position;
-        messager = new StateMessager();
         SphereCollider sphere = GetComponent<SphereCollider>();
         Assert.IsNotNull(sphere, "No sphere colider found! GameObject:" +
             name);
         workingRadius = sphere.radius;
 
-        // Init starting state
-        SwitchState(new WanderState(agent, agentHomeBase, workingRadius, curAgent.wanderInterval));
+        // Find follow game object
+        if (agentConfig.ShouldFollow)
+        {
+            Transform followTransf = transform.parent.Find(agentConfig.FollowName);
+            Assert.IsNotNull(followTransf, "" + agentConfig.name + " is trying to follow " +
+                agentConfig.FollowName + " but cant find it in local hiarchy!");
+            followTarget = followTransf.gameObject;
+        }
+
+        // Init messager and starting state
+        messager = new StateMessager();
+        SwitchState(new WanderState(agent, agentHomeBase, workingRadius, agentConfig.WanderInterval));
     }
     void Update()
     {
@@ -34,33 +49,92 @@ public class AIStateMachine : MonoBehaviour
             switch (msg.GetStateMessageType())
             {
                 case EStateMessageType.SWITCH_TO_IDLE:
-                    SwitchState(new IdleState(agent, 10));
+                    SwitchState(new IdleState(agent, agentConfig.IdleInterval));
                     break;
 
                 case EStateMessageType.SWITCH_TO_WANDER:
-                    SwitchState(new WanderState(agent, agentHomeBase,
-                        workingRadius, curAgent.wanderInterval));
+                    if(agentConfig.ShouldFollow)
+                    {
+                        SwitchState(new WanderState(agent, followTarget.transform.position,
+                            agentConfig.FollowRange, agentConfig.WanderInterval));
+                    }
+                    else
+                    {
+                        SwitchState(new WanderState(agent, agentHomeBase,
+                            workingRadius, agentConfig.WanderInterval));
+                    }
                     break;
 
                 case EStateMessageType.SWITCH_TO_ATTACK:
                     SwitchToAttack attackMsg = msg as SwitchToAttack;
                     SwitchState(new AttackState(agent, attackMsg.TargetObject,
-                        curAgent.attackDistance));
+                        agentConfig.AttackDistance));
                     break;
 
                 case EStateMessageType.SWITCH_TO_RETURN:
                     SwitchState(new ReturnToBase(agent, agentHomeBase));
                     break;
+
+                case EStateMessageType.SWITCH_TO_FALLOW:
+                    if(agentConfig.ShouldFollow)
+                    {
+                        if (followTarget != null)
+                        {
+                            SwitchState(new FallowState(agent, followTarget,
+                                agentConfig.FollowRange));
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("" + agentConfig.name + " Received fallow message even,"+
+                                " but its not marked as [shoulFallow] !");
+                    }
+                    break;
             }
         }
 
-        // Flee check
-        var coliders = Physics.OverlapSphere(agent.transform.position, curAgent.distanceToStartFlee);
-        float closest = curAgent.distanceToStartFlee+1;
+        FleeCheck();
+        FallowCheck();
+    }
+
+    public void SwitchState(IState newState)
+    {
+        if (curState != null)
+        {
+            Debug.Log("Agent: " + agentConfig.name + " state changed from: " +
+                curState.GetName() + " to: " + newState.GetName());
+
+            curState.OnStateExit();
+        }
+        curState = newState;
+        newState.OnStateEnter();
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        TryAttack(other);
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        TryAttack(other);
+    }
+
+    private void TryAttack(Collider other)
+    {
+        if (agentConfig.TagsToAttack.Contains(other.gameObject.tag))
+        {
+            messager.EnqueMessage(new SwitchToAttack(other.gameObject));
+        }
+    }
+    private void FleeCheck()
+    {
+        var coliders = Physics.OverlapSphere(agent.transform.position, agentConfig.DistanceToStartFlee);
+        float closest = agentConfig.DistanceToStartFlee + 1;
         Collider closestCollider = null;
         foreach (Collider colli in coliders)
         {
-            if(curAgent.tagsToFlee.Exists(it => it == colli.tag))
+            if (agentConfig.TagsToFlee.Contains(colli.tag))
             {
                 float curSqrtDistance = (colli.gameObject.transform.position
                 - agent.transform.position).sqrMagnitude;
@@ -71,36 +145,21 @@ public class AIStateMachine : MonoBehaviour
                 }
             }
         }
-        if(closestCollider != null)
+        if (closestCollider != null)
         {
             SwitchState(new FleeState(agent, closestCollider.gameObject,
-                curAgent.distanceToStartFlee));
+                agentConfig.DistanceToStartFlee));
         }
     }
-
-    public void SwitchState(IState newState)
+    private void FallowCheck()
     {
-        if (curState != null)
+        if(followTarget != null)
         {
-            curState.OnStateExit();
-        }
-        curState = newState;
-        newState.OnStateEnter();
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.tag == "Player")
-        {
-            messager.EnqueMessage(new SwitchToAttack(other.gameObject));
-        }
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        if(other.gameObject.tag == "Player")
-        {
-            messager.EnqueMessage(new SwitchToReturn());
+            // if fallow target is further away than allowed then fallow it
+            if((agent.transform.position-followTarget.transform.position).magnitude > agentConfig.FollowRange)
+            {
+                messager.EnqueMessage(new SwitchToFallow());
+            }
         }
     }
 }

@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.AI;
 
 public class IdleState : IState
 {
-    private UnityEngine.AI.NavMeshAgent agent;
+    private NavMeshAgent agent;
     private float idleTime;
     private float curTime;
     private float curRotation;
 
-    public IdleState(UnityEngine.AI.NavMeshAgent agent, float idleTime)
+    public IdleState(NavMeshAgent agent, float idleTime)
     {
         this.agent = agent;
         this.idleTime = idleTime;
@@ -34,5 +35,10 @@ public class IdleState : IState
 
     public void OnStateExit()
     {
+    }
+
+    public string GetName()
+    {
+        return typeof(IdleState).Name;
     }
 }

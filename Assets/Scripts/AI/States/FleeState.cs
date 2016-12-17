@@ -22,7 +22,7 @@ public class FleeState : IState
 
     public void Update(StateMessager messager)
     {
-        Vector3 toAgent = fleeFrom.transform.position - agent.transform.position;
+        Vector3 toAgent = agent.transform.position - fleeFrom.transform.position;
         float distance = toAgent.magnitude;
         if(distance > distanceToHold)
         {
@@ -39,4 +39,8 @@ public class FleeState : IState
        
     }
 
+    public string GetName()
+    {
+        return typeof(FleeState).Name;
+    }
 }

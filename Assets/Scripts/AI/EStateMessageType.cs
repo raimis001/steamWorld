@@ -8,4 +8,5 @@ public enum EStateMessageType
     SWITCH_TO_ATTACK,
     SWITCH_TO_RETURN,
     SWITCH_TO_FLEE,
+    SWITCH_TO_FALLOW,
 }

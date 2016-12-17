@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.AI;
 
 public class AttackState : IState
 {
-    private UnityEngine.AI.NavMeshAgent agent;
+    private NavMeshAgent agent;
     private GameObject targetObject;
     private float attackDistance;
 
-    public AttackState(UnityEngine.AI.NavMeshAgent agent, GameObject targetObject, float attackDistance)
+    public AttackState(NavMeshAgent agent, GameObject targetObject,
+        float attackDistance)
     {
         this.agent = agent;
         this.targetObject = targetObject;
@@ -39,5 +41,10 @@ public class AttackState : IState
     public void OnStateExit()
     {
         
+    }
+
+    public string GetName()
+    {
+        return typeof(AttackState).Name;
     }
 }

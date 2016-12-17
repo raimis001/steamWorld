@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.AI;
 
 public class WanderState: IState
 {
-    private UnityEngine.AI.NavMeshAgent agent;
+    private NavMeshAgent agent;
     private float wanderRadius;
     private float wanderInterval;
     private Vector3 homeBaseInWorldSpace;
 
-    public WanderState(UnityEngine.AI.NavMeshAgent agent, Vector3 homeBaseInWorldSpace, float wanderRadius,
+    public WanderState(NavMeshAgent agent, Vector3 homeBaseInWorldSpace, float wanderRadius,
         float wanderInterval)
     {
         this.agent = agent;
@@ -39,8 +40,13 @@ public class WanderState: IState
     private Vector3 GetRandomDestination(Vector3 orgin, float radius, int layerMask)
     {
         Vector3 destination = UnityEngine.Random.insideUnitSphere * radius;
-        UnityEngine.AI.NavMeshHit navHit;
-        UnityEngine.AI.NavMesh.SamplePosition(orgin + destination, out navHit, radius, layerMask);
+        NavMeshHit navHit;
+        NavMesh.SamplePosition(orgin + destination, out navHit, radius, layerMask);
         return navHit.position;
+    }
+
+    public string GetName()
+    {
+        return typeof(WanderState).Name;
     }
 }
