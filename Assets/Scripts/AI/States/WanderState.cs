@@ -4,12 +4,12 @@ using System;
 
 public class WanderState: IState
 {
-    private NavMeshAgent agent;
+    private UnityEngine.AI.NavMeshAgent agent;
     private float wanderRadius;
     private float wanderInterval;
     private Vector3 homeBaseInWorldSpace;
 
-    public WanderState(NavMeshAgent agent, Vector3 homeBaseInWorldSpace, float wanderRadius,
+    public WanderState(UnityEngine.AI.NavMeshAgent agent, Vector3 homeBaseInWorldSpace, float wanderRadius,
         float wanderInterval)
     {
         this.agent = agent;
@@ -39,8 +39,8 @@ public class WanderState: IState
     private Vector3 GetRandomDestination(Vector3 orgin, float radius, int layerMask)
     {
         Vector3 destination = UnityEngine.Random.insideUnitSphere * radius;
-        NavMeshHit navHit;
-        NavMesh.SamplePosition(orgin + destination, out navHit, radius, layerMask);
+        UnityEngine.AI.NavMeshHit navHit;
+        UnityEngine.AI.NavMesh.SamplePosition(orgin + destination, out navHit, radius, layerMask);
         return navHit.position;
     }
 }

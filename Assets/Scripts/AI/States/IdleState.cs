@@ -4,12 +4,12 @@ using System;
 
 public class IdleState : IState
 {
-    private NavMeshAgent agent;
+    private UnityEngine.AI.NavMeshAgent agent;
     private float idleTime;
     private float curTime;
     private float curRotation;
 
-    public IdleState(NavMeshAgent agent, float idleTime)
+    public IdleState(UnityEngine.AI.NavMeshAgent agent, float idleTime)
     {
         this.agent = agent;
         this.idleTime = idleTime;
@@ -35,5 +35,4 @@ public class IdleState : IState
     public void OnStateExit()
     {
     }
-
 }

@@ -5,9 +5,9 @@ using System;
 public class ReturnToBase : IState
 {
     private Vector3 homeBase;
-    private NavMeshAgent agent;
+    private UnityEngine.AI.NavMeshAgent agent;
 
-    public ReturnToBase(NavMeshAgent agent, Vector3 homeBase)
+    public ReturnToBase(UnityEngine.AI.NavMeshAgent agent, Vector3 homeBase)
     {
         this.agent = agent;
         this.homeBase = homeBase;

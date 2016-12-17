@@ -88,7 +88,7 @@ class DepthOfFieldScatter extends PostEffectsBase
 
 	function CreateComputeResources ()
 	{
-		if (cbDrawArgs == null)
+		/*if (cbDrawArgs == null)
 		{
 			cbDrawArgs = new ComputeBuffer (1, 16, ComputeBufferType.IndirectArguments);
 			var args = new int[4];
@@ -98,7 +98,7 @@ class DepthOfFieldScatter extends PostEffectsBase
 		if (cbPoints == null)
 		{
 			cbPoints = new ComputeBuffer (90000, 12+16, ComputeBufferType.Append);
-		}
+		}*/
 	}		
 
 	function FocalDistance01 (worldDist : float) : float {

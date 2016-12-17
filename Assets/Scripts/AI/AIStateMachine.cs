@@ -5,16 +5,15 @@ using UnityEngine.Assertions;
 public class AIStateMachine : MonoBehaviour
 {
     public Agent curAgent;
-
     private IState curState;
-    private NavMeshAgent agent;
+    private UnityEngine.AI.NavMeshAgent agent;
     private StateMessager messager;
     private Vector3 agentHomeBase;
     private float workingRadius;
 
     void Start()
     {
-        agent = GetComponentInChildren<NavMeshAgent>();
+        agent = GetComponentInChildren<UnityEngine.AI.NavMeshAgent>();
         Assert.IsNotNull(agent, "No NavMeshAgent found in GameObject: " + name);
         agentHomeBase = transform.position;
         messager = new StateMessager();
@@ -53,7 +52,29 @@ public class AIStateMachine : MonoBehaviour
                     SwitchState(new ReturnToBase(agent, agentHomeBase));
                     break;
             }
+        }
 
+        // Flee check
+        var coliders = Physics.OverlapSphere(agent.transform.position, curAgent.distanceToStartFlee);
+        float closest = curAgent.distanceToStartFlee+1;
+        Collider closestCollider = null;
+        foreach (Collider colli in coliders)
+        {
+            if(curAgent.tagsToFlee.Exists(it => it == colli.tag))
+            {
+                float curSqrtDistance = (colli.gameObject.transform.position
+                - agent.transform.position).sqrMagnitude;
+                if (curSqrtDistance < closest)
+                {
+                    closest = curSqrtDistance;
+                    closestCollider = colli;
+                }
+            }
+        }
+        if(closestCollider != null)
+        {
+            SwitchState(new FleeState(agent, closestCollider.gameObject,
+                curAgent.distanceToStartFlee));
         }
     }
 

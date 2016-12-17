@@ -10,7 +10,6 @@ public class StateMessager
         messageQueue = new Queue<IStateMessage>();
     }
 
-
     public void EnqueMessage(IStateMessage message)
     {
         messageQueue.Enqueue(message);

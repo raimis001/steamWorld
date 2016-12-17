@@ -4,11 +4,11 @@ using System;
 
 public class AttackState : IState
 {
-    private NavMeshAgent agent;
+    private UnityEngine.AI.NavMeshAgent agent;
     private GameObject targetObject;
     private float attackDistance;
 
-    public AttackState(NavMeshAgent agent, GameObject targetObject, float attackDistance)
+    public AttackState(UnityEngine.AI.NavMeshAgent agent, GameObject targetObject, float attackDistance)
     {
         this.agent = agent;
         this.targetObject = targetObject;
