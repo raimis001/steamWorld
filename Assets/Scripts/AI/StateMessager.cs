@@ -3,22 +3,22 @@ using System.Collections.Generic;
 
 public class StateMessager
 {
-    private Queue<IStateMessage> messageQueue;
+    private Queue<IGoalMessage> messageQueue;
 
     public StateMessager()
     {
-        messageQueue = new Queue<IStateMessage>();
+        messageQueue = new Queue<IGoalMessage>();
     }
 
-    public void EnqueMessage(IStateMessage message)
+    public void EnqueMessage(IGoalMessage message)
     {
         messageQueue.Enqueue(message);
     }
 
     /// <summary>Oldest message in queue or null if queue is empty.</summary>
-    public IStateMessage DequeuMessage()
+    public IGoalMessage DequeuMessage()
     {
-        IStateMessage message;
+        IGoalMessage message;
         if(messageQueue.Count > 0)
         {
             message = messageQueue.Dequeue();

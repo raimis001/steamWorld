@@ -1,10 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu (menuName = "AI/Create agent")]
-public class Agent : ScriptableObject
+[CreateAssetMenu (menuName = "AI/Create agent config")]
+public class AgentConfig : ScriptableObject
 {
     // Default behaviour
+
+    /* Init values */
+    private Vector2 homeBasePosition;
+    private float activationRadius;
+    private GameObject target;
+
+    /* User defined values */
     [SerializeField]
     private float idleInterval;
     [SerializeField]
@@ -76,5 +83,21 @@ public class Agent : ScriptableObject
     {
         get { return idleInterval; }
     }
+    public Vector2 HomeBasePosition
+    {
+        get { return homeBasePosition; }
+        set { homeBasePosition = value; }
+    }
 
+    public float ActivationRadius
+    {
+        get { return activationRadius; }
+        set { activationRadius = value; }
+    }
+
+    public GameObject Target
+    {
+        get { return target; }
+        set { target = value; }
+    } 
 }
