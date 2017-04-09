@@ -20,9 +20,13 @@ public class ThinkGoal : IGoal
     {
         curGoalState = EGoalState.InProgress;
 
+        // Here comes all goals to consider
         possibleGoals.Add(new SleepGoal(aiManager));
         possibleGoals.Add(new ReproduceGoal(aiManager));
         possibleGoals.Add(new EatGoal(aiManager));
+        possibleGoals.Add(new DrinkGoal(aiManager));
+
+        Debug.Log("Starting to think !!!");
     }
 
     public EGoalState Process()
@@ -31,6 +35,7 @@ public class ThinkGoal : IGoal
         {
             Activate();
         }
+
         if(curGoal == null || curGoal.GetGoalState() == EGoalState.Finished)
         {        
             float curDesirability = 0;
@@ -72,7 +77,7 @@ public class ThinkGoal : IGoal
 
     public bool HandleMessage(IGoalMessage message)
     {
-        return false;
+        return curGoal.HandleMessage(message);
     }
 
     public float GetDesirability()

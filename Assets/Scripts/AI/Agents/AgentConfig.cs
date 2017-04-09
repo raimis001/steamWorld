@@ -39,6 +39,15 @@ public class AgentConfig : ScriptableObject
     [SerializeField]
     private float followRange;
 
+    // Water search behaviour
+    [SerializeField] private string[] tagsToConsiderDrinkable;
+    [SerializeField] private float drinkingTime;
+
+    // Sleep behaviour
+    [SerializeField] private string[] tagsToConsiderSleepable;
+    [SerializeField] private float sleepTime;
+   
+
 
     public float WanderInterval
     {
@@ -99,5 +108,26 @@ public class AgentConfig : ScriptableObject
     {
         get { return target; }
         set { target = value; }
-    } 
+    }
+
+    public float DrinkTime
+    {
+        get { return drinkingTime; }
+        set { drinkingTime = value; }
+    }
+
+    public string[] DrinkableSourceTags
+    {
+        get { return tagsToConsiderDrinkable; }        
+    }
+
+    public string[] SleepablePlaces
+    {
+        get { return tagsToConsiderSleepable; }
+    }
+
+    public float SleepTime
+    {
+        get { return sleepTime; }
+    }
 }

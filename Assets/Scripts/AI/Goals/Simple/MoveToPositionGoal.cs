@@ -21,16 +21,12 @@ public class MoveToPositionGoal : IGoal
     {
         curState = EGoalState.InProgress;
         agent.SetDestination(targetPosition);
+        Debug.Log("MoveToPositionGoal goal active!!");
     }
 
     public EGoalState Process()
     {
-        if (curState == EGoalState.Waiting)
-        {
-            Activate();
-        }
-
-        if(agent.remainingDistance < 0.5f)
+        if(!agent.pathPending && agent.remainingDistance < 0.5f && curState == EGoalState.InProgress)
         {
             curState = EGoalState.Finished;
         }

@@ -19,7 +19,9 @@ public class ReproduceGoal : IGoal
     public void Activate()
     {
         curState = EGoalState.InProgress;
-        AddSubGoal(new WanderGoal(aiManager.NavMeshAgent, aiManager.agentConfig));
+        AddSubGoal(new WanderGoal(aiManager.NavMeshAgent, aiManager.GoalMessager, aiManager.AgentConfig));
+
+        Debug.Log("ReproduceGoal currently active !!");
     }
 
     public EGoalState Process()

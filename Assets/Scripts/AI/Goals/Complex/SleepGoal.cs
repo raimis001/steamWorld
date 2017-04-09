@@ -6,8 +6,9 @@ using UnityEngine;
 public class SleepGoal : IGoal
 {
     private EGoalState curGoalState;
-    private List<IGoal> subGoalList = new List<IGoal>();
+    private Queue<IGoal> subGoals = new Queue<IGoal>();
     private AIManager aiManager;
+    private IGoal curGoal;
 
     public SleepGoal(AIManager aiManager)
     {
@@ -16,14 +17,50 @@ public class SleepGoal : IGoal
 
     public void Activate()
     {
-        curGoalState = EGoalState.InProgress;    
+        // Find drinkable source and move to its location
+        string[] sleepPlaces = aiManager.AgentConfig.SleepablePlaces;
+        if (sleepPlaces.Length > 0)
+        {
+            int index = 0;
+            GameObject bed = GameObject.FindGameObjectWithTag(sleepPlaces[index]);
+            while (bed == null && index < sleepPlaces.Length)
+            {
+                bed = GameObject.FindGameObjectWithTag(sleepPlaces[index]);
+                index++;
+            }
+
+            if (bed == null)
+            {
+                curGoalState = EGoalState.Finished;
+            }
+            else
+            {
+                // Setting the game plan
+                curGoalState = EGoalState.InProgress;
+
+                // First find place to sleep in
+                subGoals.Enqueue(new MoveToPositionGoal(aiManager.NavMeshAgent, bed.transform.position));
+
+                // Then close your eyes and ZzzzzzZZZZzzzzZZ take a snooze
+                subGoals.Enqueue(new IdleGoal(aiManager.NavMeshAgent, aiManager.GoalMessager,
+                    aiManager.AgentConfig.SleepTime));
+            }
+        }
+
+        Debug.Log("Sleep goal activated !!!!");
+
     }
 
     public EGoalState Process()
     {
-        if(subGoalList.TrueForAll(it=>it.GetGoalState() == EGoalState.Finished))
+        Utils.ProcessSubGoals(ref subGoals, ref curGoal, ref curGoalState);
+
+        // We have taken a nice nap
+        if (curGoalState.Equals(EGoalState.Finished))
         {
-            curGoalState = EGoalState.Finished;
+            // Usually after a nice nap you are not tired and do not feel fearful
+            aiManager.BeingStats.Fear = 0;
+            aiManager.BeingStats.Tiredness = 0;
         }
 
         return curGoalState;
@@ -31,7 +68,7 @@ public class SleepGoal : IGoal
 
     public void AddSubGoal(IGoal goal)
     {
-        subGoalList.Add(goal);
+        subGoals.Enqueue(goal);
     }
 
     public float GetDesirability()
@@ -51,6 +88,6 @@ public class SleepGoal : IGoal
 
     public bool HandleMessage(IGoalMessage message)
     {
-        return false;
+        return curGoal.HandleMessage(message);
     }
 }

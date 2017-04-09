@@ -9,12 +9,14 @@ public class WanderGoal : IGoal
     private AgentConfig agentConfig;
     private EGoalState curGoalState;
     private Queue<IGoal> subGoalQeue;
+    private GoalMessager messager;
     private IGoal curGoal;
 
-    public WanderGoal(NavMeshAgent agent, AgentConfig agentConfig)
+    public WanderGoal(NavMeshAgent agent, GoalMessager messager, AgentConfig agentConfig)
     {
         this.agent = agent;
         this.agentConfig = agentConfig;
+        this.messager = messager;
         subGoalQeue = new Queue<IGoal>();
         curGoalState = EGoalState.Waiting;
     }
@@ -33,21 +35,19 @@ public class WanderGoal : IGoal
         AddSubGoal(new MoveToPositionGoal(agent, 
             GetRandomDestination(agentConfig.HomeBasePosition,
            agentConfig.ActivationRadius, -1)));
-        AddSubGoal(new IdleGoal(agent, agentConfig.IdleInterval));
+        AddSubGoal(new IdleGoal(agent, messager, agentConfig.IdleInterval));
         AddSubGoal(new MoveToPositionGoal(agent,
             GetRandomDestination(agentConfig.HomeBasePosition,
            agentConfig.ActivationRadius, -1)));
 
         // Start working
         curGoalState = EGoalState.InProgress;
+
+        Debug.Log("WanderGoal currently active !!!!");
     }
 
     public EGoalState Process()
     {
-        if(curGoalState == EGoalState.Waiting)
-        {
-            Activate();
-        }
         Utils.ProcessSubGoals(ref subGoalQeue, ref curGoal, ref curGoalState);
 
         return curGoalState;

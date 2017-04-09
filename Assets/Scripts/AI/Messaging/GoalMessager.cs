@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class StateMessager
+public class GoalMessager
 {
     private Queue<IGoalMessage> messageQueue;
 
-    public StateMessager()
+    public GoalMessager()
     {
         messageQueue = new Queue<IGoalMessage>();
     }

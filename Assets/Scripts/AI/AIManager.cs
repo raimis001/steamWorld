@@ -5,17 +5,20 @@ using UnityEngine.AI;
 
 public class AIManager : MonoBehaviour
 {
-    public AgentConfig agentConfig;
+    [SerializeField]
+    private AgentConfig agentConfig;
     private NavMeshAgent agent;
-    private StateMessager messager;
+    private GoalMessager messager;
     private IGoal thinkGoal;
 
-    private float hunger;
-    private float fear;
-    private float tiredNess;
+    private Being beingStats;
 
     void Awake()
     {
+        // Get being stats
+        beingStats = GetComponent<Being>();
+        Assert.IsNotNull(beingStats, "Every AI agent should have a 'Being' script attached to it !!");
+
         // Get agent instance
         agent = GetComponentInChildren<NavMeshAgent>();
         Assert.IsNotNull(agent, "No NavMeshAgent found in GameObject: " + name);
@@ -36,24 +39,24 @@ public class AIManager : MonoBehaviour
             agentConfig.Target = followTransf.gameObject;
         }
 
-        messager = new StateMessager();
+        messager = new GoalMessager();
         thinkGoal = new ThinkGoal(this);
-        fear = 0;
-        tiredNess = 0;
-        hunger = 0;
     }
 
     void Update()
     {
-       /* 
+        
         FleeCheck();
-        FallowCheck();*/
+        //FallowCheck();
 
         IGoalMessage message = messager.DequeuMessage();
-        if(message !=null)
+        if (message != null)
         {
-            // pass the message down the goal chain
-            thinkGoal.HandleMessage(message);
+            // Pass the message down the goal chain
+            if (thinkGoal.HandleMessage(message))
+            {
+                // Message handled successfully                
+            }
         }
         thinkGoal.Process();
     }
@@ -75,7 +78,7 @@ public class AIManager : MonoBehaviour
            
         }
     }
-   /* private void FleeCheck()
+    private void FleeCheck()
     {
         var coliders = Physics.OverlapSphere(agent.transform.position, agentConfig.DistanceToStartFlee);
         float closest = agentConfig.DistanceToStartFlee + 1;
@@ -95,10 +98,9 @@ public class AIManager : MonoBehaviour
         }
         if (closestCollider != null)
         {
-            SwitchState(new FleeState(agent, closestCollider.gameObject,
-                agentConfig.DistanceToStartFlee));
+            beingStats.Fear += 0.8f;
         }
-    }*/
+    }
     /*private void FallowCheck()
     {
         if(followTarget != null)
@@ -113,21 +115,36 @@ public class AIManager : MonoBehaviour
 
     public float Hunger
     {
-        get { return hunger; }
+        get { return beingStats.Hunger; }
     }
 
     public float Fear
     {
-        get { return fear; }
+        get { return beingStats.Fear; }
     }
 
     public float Tiredness
     {
-        get { return tiredNess; }
+        get { return beingStats.Tiredness; }
+    }
+
+    public Being BeingStats
+    {
+        get { return beingStats; }
     }
 
     public NavMeshAgent NavMeshAgent
     {
         get { return agent; }
+    }
+
+    public AgentConfig AgentConfig
+    {
+        get { return agentConfig; }
+    }
+
+    public GoalMessager GoalMessager
+    {
+        get { return messager; }
     }
 }
